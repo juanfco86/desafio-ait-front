@@ -1,5 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
+import AuthenticationButton from './Components/auth0/AuthenticationButton';
+import ExternalApi from './views/external-api';
 
 function App() {
   return (
@@ -9,14 +11,10 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+          <AuthenticationButton />
+          <div>
+            <ExternalApi />
+          </div>
       </header>
     </div>
   );
