@@ -25,7 +25,7 @@ const ExternalApi = () => {
         try {
             const token = await getAccessTokenSilently();
             const response = await fetch(
-                `${serverUrl}/authorized`,
+                `${serverUrl}/api/user/pruebaprivada`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -33,7 +33,7 @@ const ExternalApi = () => {
                 },
             );
             const responseData = await response.json();
-            setMessage(responseData.msg);
+            setMessage(responseData.mensaje);
         } catch (error) {
             console.error(error);
         }
