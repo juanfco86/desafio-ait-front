@@ -2,19 +2,20 @@ import React, { useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 
 const ExternalApi = () => {
-    const [message, setMessage] = useState();
+    const [message, setMessage] = useState('');
     const serverUrl = process.env.REACT_APP_SERVER_URL;
 
-    const { getAccessTokenSilently } = useAuth0();
+    const { getAccessTokenSilently, user } = useAuth0();
+
+    console.log(user);
 
     const callApi = async () => {
         try {
-            const response = await fetch(`${serverUrl}/api/messages/public-message`);
+            const response = await fetch(`${serverUrl}/api/user/prueba`);
 
             const responseData = await response.json();
 
-            console.log(responseData);
-            await setMessage(responseData.message);
+            setMessage(responseData.mensaje);
         } catch (error) {
             setMessage(error.message);
         }
@@ -23,23 +24,18 @@ const ExternalApi = () => {
     const callSecureApi = async () => {
         try {
             const token = await getAccessTokenSilently();
-
-            console.log(token);
-
             const response = await fetch(
-                `${serverUrl}/api/messages/protected-message`,
+                `${serverUrl}/authorized`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
                 },
             );
-
-            // const responseData = await response.json();
-
-            // setMessage(responseData.message);
+            const responseData = await response.json();
+            setMessage(responseData.msg);
         } catch (error) {
-            setMessage(error.message);
+            console.error(error);
         }
     };
 
