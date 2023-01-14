@@ -5,7 +5,8 @@ const ExternalApi = () => {
     const [message, setMessage] = useState('');
     const [postToEdit, setpostToEdit] = useState("");
     const serverUrl = process.env.REACT_APP_SERVER_URL;
-
+    const [loading, setloading] = useState(false);
+    const [img, setimg] = useState("");
     const { getAccessTokenSilently, user } = useAuth0();
 
     // console.log(user);
@@ -124,7 +125,6 @@ const ExternalApi = () => {
     const deletePost = async (e) => {
         e.preventDefault();
         const idPost = e.target.id.value;
-        console.log(idPost);
         try {
             const response = await fetch(`${serverUrl}/api/user/deletepost/${idPost}`, {
                 method: "DELETE"
@@ -140,7 +140,7 @@ const ExternalApi = () => {
     }
 
     const uploadImg = async (e) => {
-
+        setloading(true);
         const files = e.target.files;
         const data = new FormData();
         data.append("file", files[0]);
@@ -151,8 +151,9 @@ const ExternalApi = () => {
             method: "POST",
             body: data,
         })
-        const url = await res
-        console.log(url);
+        const file = await res.json()
+        setloading(false)
+        setimg(file.secure_url)
     }
 
     return (
@@ -197,7 +198,11 @@ const ExternalApi = () => {
             <hr />
             <div>
                 <h3>Upload img with cloudinary</h3>
-                <input type="file" onChange={uploadImg} name="file" placeholder='sube una imagen' />
+                <div>
+                    <input type="file" onChange={uploadImg} name="file" placeholder='sube una imagen' />
+                    {loading ? <p>Cargando imagenes...</p> : <img src={img} style={{width:"300px"}} />}
+                </div>
+
             </div>
             <hr />
             <div
