@@ -43,21 +43,55 @@ const ExternalApi = () => {
         // Prevenir el reload
         e.preventDefault();
 
+        const token = await getAccessTokenSilently();
+
         // Recoger datos del form
         const newPost = {
             title: e.target.title.value,
             content: e.target.content.value
         }
+        // Validar datos ()
+
 
         // Peticion al servidor
         const request = await fetch(`${serverUrl}/api/user/create`, {
             method: "POST",
             body: JSON.stringify(newPost),
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
             }
         });
         const data = await request.json()
+        console.log(data);
+        setMessage(data.mensaje);
+    }
+
+    const editepost = async (e) => {
+        // Prevenir el reload
+        e.preventDefault();
+
+        const token = await getAccessTokenSilently();
+
+        // Recoger DATOS
+        const idPost = e.target.id.value;
+        const editedPost = {
+            title: e.target.title.value,
+            content: e.target.content.value,
+            dateLastEdit: Date.now()
+        }
+        // Validar datos ()
+
+        // Peticion al servidor
+        const response = await fetch(`${serverUrl}/api/user/editpost/${idPost}`, {
+            method: "PUT",
+            body: JSON.stringify(editedPost),
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        })
+        const data = await response.json();
         console.log(data);
         setMessage(data.mensaje);
     }
@@ -66,9 +100,10 @@ const ExternalApi = () => {
         try {
             const response = await fetch(`${serverUrl}/api/user/listar`);
 
-            const responseData = await response.json();
+            const data = await response.json();
 
-            console.log(responseData.post);
+            console.log(data.post);
+            setMessage(data.mensaje);
         } catch (error) {
             setMessage(error.message);
         }
@@ -84,30 +119,76 @@ const ExternalApi = () => {
                 method: "DELETE"
             });
 
-            const responseData = await response.json();
+            const data = await response.json();
 
-            console.log(responseData);
+            console.log(data);
+            setMessage(data.mensaje);
         } catch (error) {
             setMessage(error.message);
         }
     }
 
+    const uploadImg = async (e) => {
+
+        const files = e.target.files;
+        const data = new FormData();
+        data.append("file", files[0]);
+        data.append("upload_preset", "prueba")
+        data.append("api_key", "729993788368966")
+
+        const res = await fetch("https://api.cloudinary.com/v1_1/dly3mgbyb/image/upload", {
+            method: "POST",
+            body: data,
+        })
+        const url = await res
+        console.log(url);
+    }
+
     return (
         <div className="container">
-            <form onSubmit={createpost}>
-                <label>
-                    <p>Titulo</p>
-                    <input type="title" name='title' />
-                </label>
-                <label>
-                    <p>Content</p>
-                    <input type="content" name='content' />
-                </label>
-                <div>
-                    <button type="submit">Submit</button>
-                </div>
-            </form>
-            <h1>External API</h1>
+            <div>
+                <h3>Crear post</h3>
+                <form onSubmit={createpost}>
+                    <label>
+                        <p>Titulo</p>
+                        <input type="title" name='title' />
+                    </label>
+                    <label>
+                        <p>Content</p>
+                        <input type="content" name='content' />
+                    </label>
+                    <div>
+                        <button type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+            <hr />
+            <div>
+                <h3>Editar post</h3>
+                <form onSubmit={editepost}>
+                    <label>
+                        <p>id</p>
+                        <input type="id" name='id' />
+                    </label>
+                    <label>
+                        <p>Titulo</p>
+                        <input type="title" name='title' />
+                    </label>
+                    <label>
+                        <p>Content</p>
+                        <input type="content" name='content' />
+                    </label>
+                    <div>
+                        <button type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+            <hr />
+            <div>
+                <h3>Upload img with cloudinary</h3>
+                <input type="file" onChange={uploadImg} name="file" placeholder='sube una imagen' />
+            </div>
+            <hr />
             <div
                 className="btn-group mt-5"
                 role="group"
@@ -130,9 +211,10 @@ const ExternalApi = () => {
                 >
                     Listar Posts
                 </button>
+                <hr />
                 <form onSubmit={deletePost}>
                     <label>
-                        <p>ID</p>
+                        <h3>Id del post que quieras borrar</h3>
                         <input type="id" name='id' />
                     </label>
                     <div>
