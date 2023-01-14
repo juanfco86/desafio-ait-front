@@ -3,6 +3,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 const ExternalApi = () => {
     const [message, setMessage] = useState('');
+    const [postToEdit, setpostToEdit] = useState("");
     const serverUrl = process.env.REACT_APP_SERVER_URL;
 
     const { getAccessTokenSilently, user } = useAuth0();
@@ -67,6 +68,16 @@ const ExternalApi = () => {
         setMessage(data.mensaje);
     }
 
+    const getPost = async (e) => {
+        let idPost = e.target.value;
+        console.log(idPost.length);
+        if (idPost.length === 24) {
+            const response = await fetch(`${serverUrl}/api/user/buscar/${idPost}`);
+            const data = await response.json();
+            setMessage(data.mensaje);
+            setpostToEdit(data.post[0]);
+        } else { setMessage("El id no es correcto") }
+    }
     const editepost = async (e) => {
         // Prevenir el reload
         e.preventDefault();
@@ -168,15 +179,15 @@ const ExternalApi = () => {
                 <form onSubmit={editepost}>
                     <label>
                         <p>id</p>
-                        <input type="id" name='id' />
+                        <input onChange={getPost} type="id" name='id' />
                     </label>
                     <label>
                         <p>Titulo</p>
-                        <input type="title" name='title' />
+                        <input type="title" name='title' placeholder={postToEdit.title} />
                     </label>
                     <label>
                         <p>Content</p>
-                        <input type="content" name='content' />
+                        <input type="content" name='content' placeholder={postToEdit.content} />
                     </label>
                     <div>
                         <button type="submit">Submit</button>
