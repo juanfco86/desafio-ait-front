@@ -8,7 +8,6 @@ const ExternalApi = () => {
     const [loading, setloading] = useState(false);
     const [img, setimg] = useState("");
     const { getAccessTokenSilently, user } = useAuth0();
-
     // console.log(user);
 
     const callApi = async () => {
@@ -152,6 +151,7 @@ const ExternalApi = () => {
             body: data,
         })
         const file = await res.json()
+        console.log(file);
         setloading(false)
         setimg(file.secure_url)
     }
