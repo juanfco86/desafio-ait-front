@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 
 const ExternalApi = () => {
@@ -7,8 +7,36 @@ const ExternalApi = () => {
     const serverUrl = process.env.REACT_APP_SERVER_URL;
     const [loading, setloading] = useState(false);
     const [img, setimg] = useState("");
+    const [userLoged, setuserLoged] = useState("");
     const { getAccessTokenSilently, user } = useAuth0();
-    // console.log(user);
+
+    useEffect(() => {
+        console.log(user);
+        if (user) {
+
+            checkUser();
+        }
+    }, [user]);
+
+    const checkUser = async () => {
+        const $user = {
+            userData: {
+                username: user.nickname,
+                first_name: user.given_name,
+                last_name: user.family_name,
+                email: user.email
+            },
+            profilePicture: user.picture
+        }
+        const token = await getAccessTokenSilently();
+        const response = await fetch(`${serverUrl}/api/user/checkuser/${user.email}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        const data = await response.json();
+        console.log(data);
+    }
 
     const callApi = async () => {
         try {
@@ -25,13 +53,11 @@ const ExternalApi = () => {
     const callSecureApi = async () => {
         try {
             const token = await getAccessTokenSilently();
-            const response = await fetch(
-                `${serverUrl}/api/user/pruebaprivada`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
+            const response = await fetch(`${serverUrl}/api/user/pruebaprivada`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
                 },
+            },
             );
             const responseData = await response.json();
             setMessage(responseData.mensaje);
@@ -48,8 +74,8 @@ const ExternalApi = () => {
 
         // Recoger datos del form
         const newPost = {
-            title: e.target.title.value,
-            content: e.target.content.value
+            email: e.target.email.value,
+            username: e.target.username.value
         }
         // Validar datos ()
 
@@ -158,16 +184,17 @@ const ExternalApi = () => {
 
     return (
         <div className="container">
+            {userLoged ? userLoged.email : ""}
             <div>
                 <h3>Crear post</h3>
                 <form onSubmit={createpost}>
                     <label>
-                        <p>Titulo</p>
-                        <input type="title" name='title' />
+                        <p>email</p>
+                        <input type="title" name='email' />
                     </label>
                     <label>
-                        <p>Content</p>
-                        <input type="content" name='content' />
+                        <p>username</p>
+                        <input type="content" name='username' />
                     </label>
                     <div>
                         <button type="submit">Submit</button>
@@ -200,7 +227,7 @@ const ExternalApi = () => {
                 <h3>Upload img with cloudinary</h3>
                 <div>
                     <input type="file" onChange={uploadImg} name="file" placeholder='sube una imagen' />
-                    {loading ? <p>Cargando imagenes...</p> : <img src={img} style={{width:"300px"}} />}
+                    {loading ? <p>Cargando imagenes...</p> : <img src={img} style={{ width: "300px" }} />}
                 </div>
 
             </div>
