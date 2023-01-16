@@ -9,33 +9,59 @@ const ExternalApi = () => {
     const [img, setimg] = useState("");
     const [userLoged, setuserLoged] = useState("");
     const { getAccessTokenSilently, user } = useAuth0();
+    
 
     useEffect(() => {
-        console.log(user);
         if (user) {
-
+            console.log(user);
             checkUser();
         }
     }, [user]);
 
     const checkUser = async () => {
-        const $user = {
-            userData: {
-                username: user.nickname,
-                first_name: user.given_name,
-                last_name: user.family_name,
-                email: user.email
-            },
-            profilePicture: user.picture
-        }
+        // PETICION AL BACKEND
         const token = await getAccessTokenSilently();
         const response = await fetch(`${serverUrl}/api/user/checkuser/${user.email}`, {
             headers: {
-                Authorization: `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
+            },
+        })
+        const responseData = await response.json()
+        console.log(responseData.user);
+        // CONDICIONAL - EL BACK NOS DEVUELVE TRUE O FALSE
+        if (!!responseData.user) {
+            console.log('El usuario existe en la bbdd');
+            console.log(responseData.user[0]);
+            setuserLoged(responseData.user[0])
+        } else {
+            // SI NO EXISTE, CREAR USER CON POST
+            console.log('El usuario no existe en la bbdd');
+            // TENEMOS QUE CREAR ESTE USUARIO
+            const $user = {
+                email: user.email,
+                userData: {
+                    username: user.nickname,
+                    first_name: user.given_name,
+                    last_name: user.family_name,
+                    profilePicture: user.picture 
+                }
             }
-        });
-        const data = await response.json();
-        console.log(data);
+
+            const request = await fetch(`${serverUrl}/api/user/createuser`, {
+                method: "POST",
+                body: JSON.stringify($user),
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            const data = await request.json()
+            console.log(data.post);
+            setuserLoged(data.post)
+            // setMessage(data.mensaje);
+        }
+
+        
     }
 
     const callApi = async () => {
@@ -185,6 +211,7 @@ const ExternalApi = () => {
     return (
         <div className="container">
             {userLoged ? userLoged.email : ""}
+            {userLoged ? <img src={userLoged.userData.profilePicture} /> : ""}
             <div>
                 <h3>Crear post</h3>
                 <form onSubmit={createpost}>
