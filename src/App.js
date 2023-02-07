@@ -1,20 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
-import AuthenticationButton from './Components/auth0/AuthenticationButton';
-import ExternalApi from './views/external-api';
+import AppRouter from "./Routes/AppRouter";
+import { Header } from './Components/Header/Header'
+import './index.css'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-          <AuthenticationButton />
-          <div>
-          <hr />
-            <ExternalApi />
-          </div>
-      </header>
-    </div>
-  );
+
+    return (
+        <>
+            <div>
+                <Header />
+                <div>
+                    <AppRouter />
+                </div>
+            </div>
+        </>
+    )
 }
 
 export default App;
