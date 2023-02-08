@@ -1,15 +1,17 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore } from "@reduxjs/toolkit";
 // reducer
-import userSlice from './features/user/userSlice';
-import giftSlice from './features/gift/giftSlice';
-import giftRandomSlice from './features/gift/giftRandomSlice';
-import giftNewSlice from './features/gift/giftNewSlice';
+import userSlice from "./features/user/userSlice";
+import gifSlice from "./features/gif/gifSlice";
+import gifRandomSlice from "./features/gif/gifRandomSlice";
+import gifNewSlice from "./features/gif/gifNewSlice";
+import gifSearchSlice from "./features/gif/gifSearchSlice";
 
 export default configureStore({
-    reducer: {
-        userSlice,
-        giftSlice,
-        giftRandomSlice,
-        giftNewSlice
-    }
+  reducer: {
+    userSlice,
+    gifSlice,
+    gifRandomSlice,
+    gifNewSlice,
+    gifSearchSlice
+  },
 });

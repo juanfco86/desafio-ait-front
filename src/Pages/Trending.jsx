@@ -1,30 +1,34 @@
 import { useSelector } from "react-redux"
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { fetchGiftTrending } from "../Api/getApi";
+import { fetchGifTrending } from "../Api/getApi";
+import { Link } from "react-router-dom";
 
 const Trending = () => {
     const dispatch = useDispatch()
-    const giftData = useSelector(state => state.giftSlice)
+    const gifData = useSelector(state => state.gifSlice)
 
-useEffect(() => {
-    fetchGiftTrending(dispatch)
-}, [dispatch]);
+    useEffect(() => {
+        fetchGifTrending(dispatch)
+    }, [dispatch]);
 
-return (
+    return (
         <>
             <h1>Trending</h1>
             <div className="container">
                 <div className="row">
-                    <div className="col">
-                    {
-                        !!giftData.start && giftData.list.data.map((gift) => {
-                            return (
-                                <img key={gift.id} src={gift.images.original.url} alt={gift.title} />
+                        {
+                            !!gifData.start && gifData.list.data.map((gif, index) => {
+                                return (
+                                    <>
+                                    <div key={gif._id || index} className="row">
+                                        <Link to={gif.url}>{gif.title}</Link>
+                                        <img src={gif.images.original.url} alt={gif.title} />
+                                    </div>
+                                    </>
                                 )
                             })
-                    }
-                    </div>
+                        }
                 </div>
             </div>
         </>

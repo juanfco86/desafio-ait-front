@@ -1,34 +1,44 @@
-import { useSelector } from "react-redux"
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { fetchGiftSearch } from "../Api/getApi";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
+import { fetchGifSearch } from "../Api/getApi";
 
 const SearchPage = () => {
     const dispatch = useDispatch()
-    const giftData = useSelector(state => state.giftSlice)
-    const [search, setSearch] = useState()
-    
-    // RECOGE LOS DATOS DEL SEARCH
-    console.log(search);
-    console.log(giftData);
+    const params = useParams()
+    const paramsValue = params.search
+    const searchData = useSelector(state => state.gifSearchSlice)
+// console.log(searchData.list);
+    useEffect(() => {
+        // fetchGifSearch(dispatch, paramsValue)
+        const fetchSearch = async () => {
+            try {
+                await fetchGifSearch(dispatch, paramsValue)
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchSearch();
+    }, [dispatch, paramsValue]);
 
-useEffect(() => {
-    fetchGiftSearch(dispatch, search)
-}, [dispatch]);
-
-return (
+    return (
         <>
             <h1>Results</h1>
             <div className="container">
                 <div className="row">
                     <div className="col">
-                    {
-                        !!giftData.start && giftData.list.data.map((gift) => {
-                            return (
-                                <img key={gift.id} src={gift.images.original.url} alt={gift.title} />
+                        {
+                            searchData.list && searchData.list.data && searchData.list.data.length > 0 && searchData.list.data.map((gif, index) => {
+                                return (
+                                    <>
+                                        <div key={gif.id || index} className="row">
+                                            <Link to={gif.url}>{gif.title}</Link>
+                                            <img src={gif.images.original.url} alt={gif.title} />
+                                        </div>
+                                    </>
                                 )
                             })
-                    }
+                        }
                     </div>
                 </div>
             </div>
