@@ -1,10 +1,8 @@
-// import React from 'react'
-// import { useSelector } from 'react-redux'
-// import { Navigate } from 'react-router-dom'
+import { useAuth0 } from '@auth0/auth0-react'
+import { Navigate } from 'react-router-dom'
 
-// export const PrivateRoutes = ({ children }) => {
-//     const usersData = useSelector(state => state.userSlice);
-    
+export const PrivateRoutes = ({ children }) => {
+    const { isAuthenticated } = useAuth0()
 
-//     return usersData.isLogged ? children : <Navigate to="/" />
-// }
+    return isAuthenticated ? children : <Navigate to="/" />
+}

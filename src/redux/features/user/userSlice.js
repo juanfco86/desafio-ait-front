@@ -9,19 +9,19 @@ export const userSlice = createSlice({
     },
     reducers: {
         setUserList: (state, action) => {
-            state.list = action.payload;
-        },
-        setUserLogged: (state, action) => {
             state.userLogged = action.payload;
-            state.isLogged = true;
-        },
-        setUserLogOut: (state) => {
-            state.isLogged = false;
-            state.userLogged = null;
         }
+        // setUserLogged: (state, action) => {
+        //     state.userLogged = action.payload;
+        //     state.isLogged = true;
+        // },
+        // setUserLogOut: (state) => {
+        //     state.isLogged = false;
+        //     state.userLogged = null;
+        // }
     }
 });
 
-export const { setUserList, setUserLogged, setUserLogOut } = userSlice.actions;
+export const { setUserList } = userSlice.actions;
 
 export default userSlice.reducer;
