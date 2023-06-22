@@ -9,53 +9,57 @@ const Homepage = () => {
     const gifData = useSelector(state => state.gifSlice)
     const myGifData = useSelector(state => state.gifNewSlice)
     const serverUrl = process.env.REACT_APP_SERVER_URL
-    // const searchData = useSelector(state => state.gifSearchSlice)
-
-    // console.log(searchData);
 
     useEffect(() => {
         fetchGifTrending(dispatch)
         fetchMyGifsList(dispatch, serverUrl)
-    }, [dispatch]);
+    }, [dispatch, serverUrl]);
+
 
     return (
         <>
-            <h1>Hola Mundo</h1>
+            <h1>Gif Web</h1>
+            <h3>Recently uploaded gifs</h3>
             <div className="container">
-                <div className="row">
-                    <div className="col">
-                        <h3>Recently uploaded gifs</h3>
-                        {
-                            myGifData.list.length > 0 && myGifData.list.map((gif, index) => {
-                                if (index < 5) {
-                                    return (
-                                        <>
-                                            <div key={gif._id || index} className="row">
-                                                <Link to={gif.thumbnail}>{gif.name}</Link>
-                                                <img key={gif._id} src={gif.thumbnail} alt={gif.name} />
-                                            </div>
-                                        </>
-                                    )
-                                }
-                            })
+                {
+                    myGifData.list.length > 0 && myGifData.list.map((gif, index) => {
+                        if (index < 6) {
+                            return (
+                                <>
+                                    <div key={gif._id || index} className="row trending--grid__item">
+                                        <Link to={gif.thumbnail} target="_blank">
+                                            <p className="trending--gif__title">{gif.name}</p>
+                                            <img key={gif._id} src={gif.thumbnail} alt={gif.name} />
+                                        </Link>
+                                    </div>
+                                </>
+                            )
+                        } else {
+                            return ''
                         }
-                        <h3>Trendings</h3>
-                        {
-                            !!gifData.start && gifData.list.data.map((gif, index) => {
-                                if (index < 5) {
-                                    return (
-                                        <>
-                                            <div key={gif._id || index} className="row">
-                                                <Link to={gif.url}>{gif.title}</Link>
-                                                <img key={gif.id} src={gif.images.original.url} alt={gif.title} />
-                                            </div>
-                                        </>
-                                    )
-                                }
-                            })
+                    })
+                }
+            </div>
+            <h3>Trendings</h3>
+            <div className="container">
+                {
+                    !!gifData.start && gifData.list.data.map((gif, index) => {
+                        if (index < 9) {
+                            return (
+                                <>
+                                    <div key={gif._id || index} className="row trending--grid__item">
+                                        <Link to={gif.url} target="_blank">
+                                            <p>{gif.title}</p>
+                                            <img key={gif.id} src={gif.images.original.url} alt={gif.title} />
+                                        </Link>
+                                    </div>
+                                </>
+                            )
+                        } else {
+                            return ''
                         }
-                    </div>
-                </div>
+                    })
+                }
             </div>
         </>
     )

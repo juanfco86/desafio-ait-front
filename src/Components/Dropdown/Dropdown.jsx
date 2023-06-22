@@ -14,6 +14,7 @@ function dropdown() {
             <Dropdown.Item href="/search/starwars">Star Wars</Dropdown.Item>
             <Dropdown.Item href="/search/sports">Sports</Dropdown.Item>
             <Dropdown.Item href="/search/smoke">Smoke</Dropdown.Item>
+            <Dropdown.Item href="/search/run">Carrera</Dropdown.Item>
         </Dropdown.Menu>
         </Dropdown>
     );

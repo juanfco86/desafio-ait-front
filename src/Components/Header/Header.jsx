@@ -12,36 +12,38 @@ export function Header() {
     return (
         <>
             <nav className="navbar">
-                <Link to="/">
-                    <button className='btn btn-primary btn-block'>Home</button>
-                </Link>
-                <Link to="/trending">
-                    <button className='btn btn-primary btn-block'>Trendings</button>
-                </Link>
-                <Dropdown />
-                <Link to="/random">
-                    <button className='btn btn-primary btn-block'>Random</button>
-                </Link>
-                {
-                    !!isAuthenticated ?
+                <div className='nav--container'>
+                    <Link to="/">
+                        <button className='btn btn-primary btn-block'>Home</button>
+                    </Link>
+                    <Link to="/trending">
+                        <button className='btn btn-primary btn-block'>Trendings</button>
+                    </Link>
+                    <Dropdown />
+                    <Link to="/random">
+                        <button className='btn btn-primary btn-block'>Random</button>
+                    </Link>
+                    {
+                        !!isAuthenticated ?
                         <div><UploadGif /></div>
                         : ''
-                }
-                {
-                    !!isAuthenticated ?
+                    }
+                    {
+                        !!isAuthenticated ?
                         <Link to="/mygifs">
-                            <button className='btn btn-primary btn-block'>My gifs</button>
-                        </Link> : ''
-                }
-                {
-                    !!isAuthenticated ?
+                                <button className='btn btn-primary btn-block'>My gifs</button>
+                            </Link> : ''
+                    }
+                    {
+                        !!isAuthenticated ?
                         <Link to="/profile">
-                            <button className='btn btn-primary btn-block'>Profile</button>
-                        </Link> : ''
-                }
-                <AuthenticationButton />
-            </nav>
+                                <button className='btn btn-primary btn-block'>Profile</button>
+                            </Link> : ''
+                    }
+                    <AuthenticationButton />
+                </div>
             <Search />
+            </nav>
         </>
     )
 }

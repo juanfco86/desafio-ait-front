@@ -15,7 +15,7 @@ const Search = () => {
     }
 
     return (
-        <form className="input-group" onSubmit={searchValue}>
+        <form className="input-group mt-2 nav--search" onSubmit={searchValue}>
             <input type="text" className="form-control" placeholder="Search" name="search" />
             <button type="submit" className="input-group-text">Submit</button>
         </form>

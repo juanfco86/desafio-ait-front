@@ -1,38 +1,112 @@
-.App {
-  text-align: center;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  height: 100%;
+  width: 100%;
+  background-color: blue;
+
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+h1,
+h3 {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* NAVBAR */
+
+nav {
+  background-color: #282c34;
+}
+
+.nav--container {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+/* HOME */
+
+
+/* TRENDINGS */
+
+.container {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  grid-template-columns: 1fr 1fr 1fr;
+  margin: 4vh 0;
+  gap: 10px;
+}
+
+.trending--grid__item {
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  background-color: #282c34;
+  border-bottom: 8px solid #282c34;
+}
+
+.trending--grid__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.trending--gif__title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* CATEGORIES */
+
+
+/* SEARCH */
+
+.nav--search {
+  max-width: 50.4%;
+  margin: 0 auto;
+}
+
+/* RANDOM */
+
+.random--img {
+  max-width: 60vw;
+  max-height: 60vh;
+  background-color: #282c34;
+  border-bottom: 8px solid #282c34;
+}
+
+.random--img__size {
+  object-fit: contain;
+  max-width: 60vw;
+  max-height: 60vh;
+}
+
+.random--img__title {
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  margin-bottom: 0.5vh;
 }
 
-.App-link {
-  color: #61dafb;
+.random--container {
+  margin-top: 4vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+/* MY GIFS */
+
+
+/* PROFILE */

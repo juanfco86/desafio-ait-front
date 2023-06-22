@@ -16,20 +16,20 @@ const Trending = () => {
         <>
             <h1>Trending</h1>
             <div className="container">
-                <div className="row">
-                        {
-                            !!gifData.start && gifData.list.data.map((gif, index) => {
-                                return (
-                                    <>
-                                    <div key={gif._id || index} className="row">
-                                        <Link to={gif.url}>{gif.title}</Link>
+                    {
+                        !!gifData.start && gifData.list.data.map((gif, index) => {
+                            return (
+                                <>
+                                <div key={gif._id || index} className="row trending--grid__item">
+                                    <Link to={gif.url} target="_blank">
+                                        <p className="trending--gif__title">{gif.title}</p>
                                         <img src={gif.images.original.url} alt={gif.title} />
-                                    </div>
-                                    </>
-                                )
-                            })
-                        }
-                </div>
+                                    </Link>
+                                </div>
+                                </>
+                            )
+                        })
+                    }
             </div>
         </>
     )

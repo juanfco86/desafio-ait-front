@@ -32,7 +32,7 @@ export const fetchGifTrending = async (dispatch) => {
 export const fetchGifSearch = async (dispatch, search) => {
   try {
     const response = await fetch(
-      `https://api.giphy.com/v1/gifs/search?api_key=hUTYoE9O0GHWXkuXsL8ZiNd9eNVO8UU4&q=${search}&limit=10&offset=0&rating=g&lang=en`
+      `https://api.giphy.com/v1/gifs/search?api_key=hUTYoE9O0GHWXkuXsL8ZiNd9eNVO8UU4&q=${search}&limit=15&offset=0&rating=g&lang=en`
     );
     const data = await response.json();
     dispatch(setGifListSearch(data));

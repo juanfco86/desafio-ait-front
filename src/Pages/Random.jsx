@@ -16,23 +16,19 @@ const Random = () => {
     return (
         <>
             <h1>Random</h1>
-            <div className="container">
-                <div className="row">
-                    <div className="col">
-                        {
-                            !!gifDataRandom.start && gifDataRandom ?
-                                (
-                                    <>
-                                        <div key={gifDataRandom.list.data.id} className="row">
-                                            <Link to={gifDataRandom.list.data.url}>{gifDataRandom.list.data.title}</Link>
-                                            <img src={gifDataRandom.list.data.images.original.url} alt={gifDataRandom.list.data.title} />
-                                        </div>
-                                    </>
-                                )
-                                : ''
-                        }
-                    </div>
-                </div>
+            <div className="random--container">
+                {
+                    !!gifDataRandom.start && gifDataRandom ?
+                        (
+                            <>
+                                <div key={gifDataRandom.list.data.id} className="row random--img">
+                                    <Link className="random--img__title" target="_blank" to={gifDataRandom.list.data.url}>{gifDataRandom.list.data.title}</Link>
+                                    <img className="random--img__size" src={gifDataRandom.list.data.images.original.url} alt={gifDataRandom.list.data.title} />
+                                </div>
+                            </>
+                        )
+                        : 'Loading...'
+                }
             </div>
         </>
     )
