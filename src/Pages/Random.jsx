@@ -22,7 +22,7 @@ const Random = () => {
                         (
                             <>
                                 <div key={gifDataRandom.list.data.id} className="row random--img">
-                                    <Link className="random--img__title" target="_blank" to={gifDataRandom.list.data.url}>{gifDataRandom.list.data.title}</Link>
+                                    <Link className="random--img__title link--style" target="_blank" to={gifDataRandom.list.data.url}>{gifDataRandom.list.data.title}</Link>
                                     <img className="random--img__size" src={gifDataRandom.list.data.images.original.url} alt={gifDataRandom.list.data.title} />
                                 </div>
                             </>

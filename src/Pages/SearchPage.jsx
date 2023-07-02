@@ -29,7 +29,7 @@ const SearchPage = () => {
                         return (
                             <>
                                 <div key={gif.id || index} className="row trending--grid__item">
-                                    <Link to={gif.url} target="_blank">
+                                    <Link to={gif.url} target="_blank" className="link--style">
                                         <p className="trending--gif__title">{gif.title}</p>
                                         <img src={gif.images.original.url} alt={gif.title} />
                                     </Link>

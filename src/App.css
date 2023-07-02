@@ -18,6 +18,14 @@ h3 {
   align-items: center;
 }
 
+.link--style {
+  text-decoration: none;
+  text-align: center;
+  font-weight: bold;
+  color: whitesmoke;
+  
+}
+
 /* NAVBAR */
 
 nav {

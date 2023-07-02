@@ -29,7 +29,7 @@ const MyGifs = () => {
                             myPersonalGif && myPersonalGif.length > 0 ? myPersonalGif.map((gif, index) => {
                                 return (
                                     <div key={gif._id || index} className="row trending--grid__item">
-                                        <Link to={gif.thumbnail} target="_blank">
+                                        <Link to={gif.thumbnail} target="_blank" className="link--style">
                                             <p className="trending--gif__title">{gif.name}</p>
                                             <img src={gif.thumbnail} alt={gif.name} />
                                         </Link>

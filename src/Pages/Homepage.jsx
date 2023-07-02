@@ -27,7 +27,7 @@ const Homepage = () => {
                             return (
                                 <>
                                     <div key={gif._id || index} className="row trending--grid__item">
-                                        <Link to={gif.thumbnail} target="_blank">
+                                        <Link to={gif.thumbnail} target="_blank" className="link--style">
                                             <p className="trending--gif__title">{gif.name}</p>
                                             <img key={gif._id} src={gif.thumbnail} alt={gif.name} />
                                         </Link>
@@ -48,7 +48,7 @@ const Homepage = () => {
                             return (
                                 <>
                                     <div key={gif._id || index} className="row trending--grid__item">
-                                        <Link to={gif.url} target="_blank">
+                                        <Link to={gif.url} target="_blank" className="link--style">
                                             <p>{gif.title}</p>
                                             <img key={gif.id} src={gif.images.original.url} alt={gif.title} />
                                         </Link>
